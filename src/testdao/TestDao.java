@@ -5,14 +5,12 @@ public class TestDao{
   public static void main(String[] args) {
     //Testons des élèves
     DAO<Eleve> eleveDao = new EleveDAO(connection.getInstance());
-    DAO<Professeur> ProfesseurDao = new ProfesseurDAO(connection.getInstance());
+
     for(int i = 1; i < 6; i++){
       Eleve eleve = eleveDao.find(i);
       System.out.println("Elève N°" + eleve.getId() + "  - " + eleve.getNum() + " " + eleve.getGroupe());
     }
-      Professeur prof = ProfesseurDao.find(6);
-      System.out.println("Professeur N°" + prof.getId() + "  - Matière - " + prof.getIdCours());
-    System.out.println("\n********************************\n");
+    
     /*  
     //Voyons voir les professeurs
     DAO<Professeur> profDao = new ProfesseurDAO(SdzConnection.getInstance());
