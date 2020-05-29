@@ -31,11 +31,11 @@ public class LoginVue extends JFrame {
     //----------------------------------------------------------
     private JTextField emailTextField; // To reference a text field
     private JPasswordField passwordTextField; // To reference a text field
-    
-    //----------------------------------------------------------
+ 
+     //----------------------------------------------------------
     private JButton loginButton;       // To reference a button
     
-    
+     
     public LoginVue(){
        
         setSize (700, 300); // donne une taille en hauteur et largeur à la fenêtre
