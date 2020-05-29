@@ -15,7 +15,7 @@ public class connection{
   /**
   * URL de connection
   */
-  private static String url = "jdbc:mysql://localhost:3306/projetjava?zeroDateTimeBehavior=CONVERT_TO_NULL&serverTimezone=UTC";
+  private static String url = "jdbc:mysql://localhost:8889/planning?zeroDateTimeBehavior=CONVERT_TO_NULL&serverTimezone=UTC";
 
   /**
   * Nom du user
@@ -25,7 +25,7 @@ public class connection{
   /**
   * Mot de passe du user
   */
-  private static String passwd = "";
+  private static String passwd = "root";
 
   /**
   * Objet Connection
