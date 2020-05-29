@@ -13,10 +13,10 @@ public class TestDao{
       Eleve eleve = eleveDao.find(i);
       System.out.println("Elève N°" + eleve.getId() + "  - " + eleve.getNum() + " " + eleve.getGroupe());
     }
-    Eleve eleve = new Eleve(5,63,1);
+    Eleve eleve = new Eleve(5,6,1);
     Utilisateur user = new Utilisateur(1,"etienne@gmail.com","mdp","Rollin","Etienne",0);
     eleveDao.create(eleve);
-    eleveDao.update(eleve,5);
+    eleveDao.update(eleve,7);
     eleveDao.delete(eleve);
     UtilisateurDao.create(user);
     Cours cours = new Cours(1,"maths");
