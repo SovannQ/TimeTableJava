@@ -25,7 +25,7 @@ public class CoursDAO extends DAO<Cours> {
   public boolean create(Cours obj) {
       try {
       int result = this.connect.createStatement().executeUpdate(
-              "INSERT INTO cours(Nom)" 
+              "INSERT INTO cours(nom)" 
                       + "VALUES('" + obj.getNom()+"');");       
     } catch (SQLException e) {
         System.out.println(e);

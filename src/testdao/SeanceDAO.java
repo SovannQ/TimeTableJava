@@ -3,16 +3,16 @@ import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 //CTRL + SHIFT + O pour générer les imports
-public class EleveDAO extends DAO<Eleve> {
-  public EleveDAO(Connection conn) {
+public class SeanceDAO extends DAO<Seance> {
+  public SeanceDAO(Connection conn) {
     super(conn);
   }
 
   @Override
-  public boolean delete(Eleve obj) {
+  public boolean delete(Seance obj) {
             try {
       int result = this.connect.createStatement().executeUpdate(
-              "DELETE FROM etudiant WHERE IDutilisateur='"+obj.getId()+"';"); 
+              "DELETE FROM seance WHERE ID='"+obj.getId()+"';"); 
     } catch (SQLException e) {
         System.out.println(e);
             System.exit(1);
@@ -22,11 +22,11 @@ public class EleveDAO extends DAO<Eleve> {
   
 
   @Override
-  public boolean create(Eleve obj) {
+  public boolean create(Seance obj) {
       try {
       int result = this.connect.createStatement().executeUpdate(
-              "INSERT INTO etudiant(IDutilisateur,numero,IDgroupe)" 
-                      + "VALUES('" + obj.getId()+"','" + obj.getNum()+"','"+ obj.getGroupe() +"');");       
+              "INSERT INTO seance(semaine,date,heure_debut,heure_fin,etat,IDcours,IDtype)" 
+                      + "VALUES('" + obj.getSemaine()+"','" + obj.getDate()+"','"+ obj.getHeureDebut() +"','"+ obj.getHeureFin() +"','"+ obj.getEtat() +"','"+ obj.getIdCours() +"','"+ obj.getIdType() +"');");       
     } catch (SQLException e) {
         System.out.println(e);
             System.exit(1);
@@ -35,11 +35,11 @@ public class EleveDAO extends DAO<Eleve> {
   }
    
   @Override
-  public boolean update(Eleve obj, int id) {   
+  public boolean update(Seance obj, int num) {   
       try {
           int result = this.connect.createStatement().executeUpdate(    
-                  "UPDATE etudiant SET numero = '"+obj.getNum()+"'"
-                          + "WHERE IDutilisateur ='"+id+"' ;");
+                  "UPDATE etudiant SET numero = '"+num+"'"
+                          + "WHERE IDutilisateur = '"+obj.getId()+"';"); 
       } catch (SQLException ex) {
           Logger.getLogger(EleveDAO.class.getName()).log(Level.SEVERE, null, ex);
       }
@@ -47,28 +47,33 @@ public class EleveDAO extends DAO<Eleve> {
   }
    
   @Override
-  public Eleve find(int id) {
-    Eleve eleve = new Eleve();      
+  public Seance find(int id) {
+    Seance seance = new Seance();      
       
     try {
       ResultSet result = this.connect.createStatement(
         ResultSet.TYPE_SCROLL_INSENSITIVE,
         ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT * FROM etudiant WHERE IDutilisateur = " + id);
       if(result.first())
-        eleve = new Eleve(
+        seance = new Seance(
           id,
-          result.getInt("numero"),
-          result.getInt("IDgroupe")
+          result.getInt("semaine"),
+          result.getInt("date"),
+          result.getInt("heure_debut"),
+          result.getInt("heure_fin"),
+          result.getInt("etat"),
+          result.getInt("IDcours"),
+          result.getInt("IDtype")
         );         
     } catch (SQLException e) {
         System.out.println(e);
             System.exit(1);
     }
-    return eleve;
+    return seance;
   }
 
     @Override
-    public boolean updateNom(Eleve obj, String nom) {
+    public boolean updateNom(Seance obj, String nom) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

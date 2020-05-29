@@ -3,16 +3,16 @@ import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 //CTRL + SHIFT + O pour générer les imports
-public class EleveDAO extends DAO<Eleve> {
-  public EleveDAO(Connection conn) {
+public class GroupeDAO extends DAO<Groupe> {
+  public GroupeDAO(Connection conn) {
     super(conn);
   }
 
   @Override
-  public boolean delete(Eleve obj) {
+  public boolean delete(Groupe obj) {
             try {
       int result = this.connect.createStatement().executeUpdate(
-              "DELETE FROM etudiant WHERE IDutilisateur='"+obj.getId()+"';"); 
+              "DELETE FROM groupe WHERE ID='"+obj.getId()+"';"); 
     } catch (SQLException e) {
         System.out.println(e);
             System.exit(1);
@@ -22,11 +22,11 @@ public class EleveDAO extends DAO<Eleve> {
   
 
   @Override
-  public boolean create(Eleve obj) {
+  public boolean create(Groupe obj) {
       try {
       int result = this.connect.createStatement().executeUpdate(
-              "INSERT INTO etudiant(IDutilisateur,numero,IDgroupe)" 
-                      + "VALUES('" + obj.getId()+"','" + obj.getNum()+"','"+ obj.getGroupe() +"');");       
+              "INSERT INTO groupe(nom, IDpromo)" 
+                      + "VALUES('" + obj.getNom()+"','" + obj.getIdPromotion()+"');");       
     } catch (SQLException e) {
         System.out.println(e);
             System.exit(1);
@@ -35,11 +35,11 @@ public class EleveDAO extends DAO<Eleve> {
   }
    
   @Override
-  public boolean update(Eleve obj, int id) {   
+  public boolean update(Groupe obj, int num) {   
       try {
           int result = this.connect.createStatement().executeUpdate(    
-                  "UPDATE etudiant SET numero = '"+obj.getNum()+"'"
-                          + "WHERE IDutilisateur ='"+id+"' ;");
+                  "UPDATE groupe SET promo = '"+num+"',promo = '"+num+"'"
+                          + "WHERE ID = '"+obj.getId()+"';"); 
       } catch (SQLException ex) {
           Logger.getLogger(EleveDAO.class.getName()).log(Level.SEVERE, null, ex);
       }
@@ -47,29 +47,36 @@ public class EleveDAO extends DAO<Eleve> {
   }
    
   @Override
-  public Eleve find(int id) {
-    Eleve eleve = new Eleve();      
+  public Groupe find(int id) {
+    Groupe groupe = new Groupe();      
       
     try {
       ResultSet result = this.connect.createStatement(
         ResultSet.TYPE_SCROLL_INSENSITIVE,
         ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT * FROM etudiant WHERE IDutilisateur = " + id);
       if(result.first())
-        eleve = new Eleve(
+        groupe = new Groupe(
           id,
-          result.getInt("numero"),
-          result.getInt("IDgroupe")
+          result.getString("nom"),
+          result.getInt("IDpromo")
         );         
     } catch (SQLException e) {
         System.out.println(e);
             System.exit(1);
     }
-    return eleve;
+    return groupe;
   }
 
     @Override
-    public boolean updateNom(Eleve obj, String nom) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public boolean updateNom(Groupe obj, String nom) {
+        try {
+          int result = this.connect.createStatement().executeUpdate(    
+                  "UPDATE groupe SET nom = '"+nom+"'"
+                          + "WHERE ID = '"+obj.getId()+"';"); 
+      } catch (SQLException ex) {
+          Logger.getLogger(EleveDAO.class.getName()).log(Level.SEVERE, null, ex);
+      }
+    return false;
     }
 
 }

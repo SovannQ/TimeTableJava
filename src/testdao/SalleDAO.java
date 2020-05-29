@@ -3,16 +3,16 @@ import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 //CTRL + SHIFT + O pour générer les imports
-public class EleveDAO extends DAO<Eleve> {
-  public EleveDAO(Connection conn) {
+public class SalleDAO extends DAO<Salle> {
+  public SalleDAO(Connection conn) {
     super(conn);
   }
 
   @Override
-  public boolean delete(Eleve obj) {
+  public boolean delete(Salle obj) {
             try {
       int result = this.connect.createStatement().executeUpdate(
-              "DELETE FROM etudiant WHERE IDutilisateur='"+obj.getId()+"';"); 
+              "DELETE FROM salle WHERE ID='"+obj.getId()+"';"); 
     } catch (SQLException e) {
         System.out.println(e);
             System.exit(1);
@@ -22,11 +22,11 @@ public class EleveDAO extends DAO<Eleve> {
   
 
   @Override
-  public boolean create(Eleve obj) {
+  public boolean create(Salle obj) {
       try {
       int result = this.connect.createStatement().executeUpdate(
-              "INSERT INTO etudiant(IDutilisateur,numero,IDgroupe)" 
-                      + "VALUES('" + obj.getId()+"','" + obj.getNum()+"','"+ obj.getGroupe() +"');");       
+              "INSERT INTO salle(nom,capacite,IDsite)" 
+                      + "VALUES('" + obj.getNom()+"','" + obj.getCapacite()+"','" + obj.getIdSite()+"');");       
     } catch (SQLException e) {
         System.out.println(e);
             System.exit(1);
@@ -35,11 +35,11 @@ public class EleveDAO extends DAO<Eleve> {
   }
    
   @Override
-  public boolean update(Eleve obj, int id) {   
+  public boolean updateNom(Salle obj, String nom) {   
       try {
           int result = this.connect.createStatement().executeUpdate(    
-                  "UPDATE etudiant SET numero = '"+obj.getNum()+"'"
-                          + "WHERE IDutilisateur ='"+id+"' ;");
+                  "UPDATE salle SET nom = '"+nom+"'"
+                          + "WHERE ID = '"+obj.getId()+"';"); 
       } catch (SQLException ex) {
           Logger.getLogger(EleveDAO.class.getName()).log(Level.SEVERE, null, ex);
       }
@@ -47,29 +47,29 @@ public class EleveDAO extends DAO<Eleve> {
   }
    
   @Override
-  public Eleve find(int id) {
-    Eleve eleve = new Eleve();      
+  public Salle find(int id) {
+    Salle salle = new Salle();      
       
     try {
       ResultSet result = this.connect.createStatement(
         ResultSet.TYPE_SCROLL_INSENSITIVE,
-        ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT * FROM etudiant WHERE IDutilisateur = " + id);
+        ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT * FROM salle WHERE ID = " + id);
       if(result.first())
-        eleve = new Eleve(
+        salle = new Salle(
           id,
-          result.getInt("numero"),
-          result.getInt("IDgroupe")
+          result.getString("nom"),
+          result.getInt("capacite"),
+          result.getInt("IDsite")
         );         
     } catch (SQLException e) {
         System.out.println(e);
             System.exit(1);
     }
-    return eleve;
+    return salle;
   }
 
     @Override
-    public boolean updateNom(Eleve obj, String nom) {
+    public boolean update(Salle obj, int num) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
 }
