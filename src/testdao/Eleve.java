@@ -13,6 +13,10 @@ public class Eleve {
     this.numero = numero;
     this.IDgroupe = IDgroupe;
   }
+  public Eleve(int numero, int IDgroupe) {
+    this.numero = numero;
+    this.IDgroupe = IDgroupe;
+  }
   public Eleve(){};
      
   public int getId() {
@@ -27,7 +31,7 @@ public class Eleve {
     return numero;
   }
 
-  public void setNom(int num) {
+  public void setNum(int num) {
     this.numero = num;
   }
 

@@ -7,7 +7,7 @@ package testdao;
 
 
 import java.sql.*;
-
+import java.util.*;
 
 public abstract class DAO<T> {
   protected Connection connect = null;
@@ -33,9 +33,19 @@ public abstract class DAO<T> {
   /**
   * Méthode de mise à jour
   * @param obj
+  * @param num
   * @return boolean
   */
-  public abstract boolean update(T obj);
+  public abstract boolean update(T obj, int num);
+  
+   /**
+  * Méthode de mise à jour
+  * @param obj
+  * @param nom
+  * @return boolean
+  */
+  
+  public abstract boolean updateNom(T obj, String nom);
 
   /**
   * Méthode de recherche des informations

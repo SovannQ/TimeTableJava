@@ -6,37 +6,26 @@ public class TestDao{
     //Testons des élèves
     DAO<Eleve> eleveDao = new EleveDAO(connection.getInstance());
     DAO<Professeur> ProfesseurDao = new ProfesseurDAO(connection.getInstance());
+    DAO<Utilisateur> UtilisateurDao = new UtilisateurDAO(connection.getInstance());
+    DAO<Cours> CoursDao = new CoursDAO(connection.getInstance());
+    DAO<typeCours> typeCoursDao = new typeCoursDAO(connection.getInstance());
     for(int i = 1; i < 6; i++){
       Eleve eleve = eleveDao.find(i);
       System.out.println("Elève N°" + eleve.getId() + "  - " + eleve.getNum() + " " + eleve.getGroupe());
     }
-      Professeur prof = ProfesseurDao.find(6);
-      System.out.println("Professeur N°" + prof.getId() + "  - Matière - " + prof.getIdCours());
+    Eleve eleve = new Eleve(5,63,1);
+    Utilisateur user = new Utilisateur(1,"etienne@gmail.com","mdp","Rollin","Etienne",0);
+    eleveDao.create(eleve);
+    eleveDao.update(eleve,5);
+    eleveDao.delete(eleve);
+    UtilisateurDao.create(user);
+    Cours cours = new Cours(1,"maths");
+    CoursDao.updateNom(cours,"mathématiques");
+    typeCours typecours = new typeCours(1,"td");
+    typeCoursDao.updateNom(typecours,"tp");
+    Professeur prof = ProfesseurDao.find(6);
+    System.out.println("Professeur N°" + prof.getId() + "  - Matière - " + prof.getIdCours());
     System.out.println("\n********************************\n");
-    /*  
-    //Voyons voir les professeurs
-    DAO<Professeur> profDao = new ProfesseurDAO(SdzConnection.getInstance());
-    for(int i = 4; i < 8; i++){
-      Professeur prof = profDao.find(i);
-      System.out.println(prof.getNom() + " " + prof.getPrenom() + " enseigne  : ");
-      for(Matiere mat : prof.getListMatiere())
-        System.out.println("\t * " + mat.getNom());
-    }
-      
-    System.out.println("\n********************************\n");
-      
-    //Et là, c'est la classe
-    DAO<Classe> classeDao = new ClasseDAO(SdzConnection.getInstance());
-    Classe classe = classeDao.find(11);
-      
-    System.out.println("Classe de " + classe.getNom());
-    System.out.println("\nListe des élèves :");
-    for(Eleve eleve : classe.getListEleve())
-      System.out.println("  - " + eleve.getNom() + " " + eleve.getPrenom());
-      
-    System.out.println("\nListe des professeurs :");
-    for(Professeur prof : classe.getListProfesseur())
-      System.out.println("  - " + prof.getNom() + " " + prof.getPrenom());      
-  }*/
+
     }
 }

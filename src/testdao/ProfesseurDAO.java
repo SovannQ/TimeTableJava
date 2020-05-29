@@ -6,6 +6,8 @@
 package testdao;
 
 import java.sql.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 /**
  *
  * @author titir
@@ -17,16 +19,38 @@ public class ProfesseurDAO extends DAO<Professeur>{
 
   @Override
   public boolean create(Professeur obj) {
+      try {
+      int result = this.connect.createStatement().executeUpdate(
+              "INSERT INTO enseignant(IDutilisateur,IDcours)" 
+                      + "VALUES('" + obj.getId()+"','" + obj.getIdCours()+"');");
+    } catch (SQLException e) {
+        System.out.println(e);
+            System.exit(1);
+    }
     return false;
   }
 
   @Override
   public boolean delete(Professeur obj) {
-    return false;
+            try {
+      int result = this.connect.createStatement().executeUpdate(
+              "DELETE FROM enseignant WHERE IDutilisateur='"+obj.getId()+"';"); 
+    } catch (SQLException e) {
+        System.out.println(e);
+            System.exit(1);
+    }
+      return false;
   }
    
   @Override
-  public boolean update(Professeur obj) {
+  public boolean update(Professeur obj, int num) {
+       try {
+          int result = this.connect.createStatement().executeUpdate(    
+                  "UPDATE enseignant SET IDcours = '"+num+"'"
+                          + "WHERE IDutilisateur = '"+obj.getId()+"';"); 
+      } catch (SQLException ex) {
+          Logger.getLogger(EleveDAO.class.getName()).log(Level.SEVERE, null, ex);
+      }
     return false;
   }
   
@@ -47,5 +71,11 @@ public class ProfesseurDAO extends DAO<Professeur>{
         }
         return prof;
     }
+  
+    @Override
+    public boolean updateNom(Professeur obj, String nom) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
 
 }
