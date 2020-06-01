@@ -35,11 +35,11 @@ public class UtilisateurDAO extends DAO<Utilisateur> {
   }
    
   @Override
-  public boolean update(Utilisateur obj, int num) {   
+  public boolean update(Utilisateur obj, int id) {   
       try {
           int result = this.connect.createStatement().executeUpdate(    
-                  "UPDATE utilisateur SET numero = '"+num+"'"
-                          + "WHERE IDutilisateur = '"+obj.getId()+"';"); 
+                  "UPDATE utilisateur SET mail = '"+obj.getMail()+"', password = '"+obj.getPassword()+"', nom = '"+obj.getNom()+"', prenom = '"+obj.getPrenom()+"', droit ='"+obj.getDroit()+"'"
+                          + "WHERE IDutilisateur = '"+id+"';"); 
       } catch (SQLException ex) {
           Logger.getLogger(EleveDAO.class.getName()).log(Level.SEVERE, null, ex);
       }
