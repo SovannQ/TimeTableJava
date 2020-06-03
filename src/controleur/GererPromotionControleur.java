@@ -46,6 +46,9 @@ public class GererPromotionControleur {
         ArrayList<Groupe> groupes = GroupeDao.findAll(promotion.getId());
         for (Groupe j : groupes)
         {
+            GererGroupeControleur essai = new GererGroupeControleur(j.getId());
+            
+            /*
             //Groupe
             System.out.print("Groupe : ");
            System.out.println(j.getNom());
@@ -83,7 +86,7 @@ public class GererPromotionControleur {
            Utilisateur prof = UtilisateurDao.find(SeanceEnseignantDao.find(seance.getId()).getIdEnseignant());
            this.professeurs.add(prof);
            System.out.println(prof.getNom());
-           System.out.println("-------------------------------------------");
+           System.out.println("-------------------------------------------");*/
          }
         
     }
