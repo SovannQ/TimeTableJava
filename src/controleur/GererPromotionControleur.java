@@ -47,47 +47,71 @@ public class GererPromotionControleur {
         for (Groupe j : groupes)
         {
             GererGroupeControleur essai = new GererGroupeControleur(j.getId());
-            
-            /*
-            //Groupe
-            System.out.print("Groupe : ");
-           System.out.println(j.getNom());
-           //On commence par définir une salle
-           Salle salle = SalleDao.find(SeanceSalleDao.find(SeanceGroupeDao.find(j.getId()).getIdSeance()).getIdSalle());
-           this.salles.add(salle);
-           System.out.print("Salle : ");
-           System.out.println(salle.getNom());
-           //On defini la seance
-           Seance seance = SeanceDao.find(SeanceGroupeDao.find(j.getId()).getIdSeance());
-           this.seances.add(seance);
-           System.out.print("Jour du cours : ");
-           System.out.println(seance.getDate());
-           System.out.print("Horaires du cours : ");
-           System.out.print(seance.getHeureDebut());
-           System.out.print("-");
-           System.out.println(seance.getHeureFin());
-           //le cours
-           Cours cours = CoursDao.find(seance.getIdCours());
-           this.cours.add(cours);
-           System.out.print("Nom du cours: ");
-           System.out.println(cours.getNom());
-           //type du cours
-           typeCours typecours = typeCoursDao.find(seance.getIdType());
-           this.typecours.add(typecours);
-           System.out.print("Type de cours : ");
-           System.out.println(typecours.getNom());
-           //Le site des cours
-           System.out.print("Site du cours : ");
-           Site site = SiteDao.find(salle.getIdSite());
-           this.sites.add(site);
-           System.out.println(site.getNom());
-           //Professeurs
-           System.out.print("Professeur : ");
-           Utilisateur prof = UtilisateurDao.find(SeanceEnseignantDao.find(seance.getId()).getIdEnseignant());
-           this.professeurs.add(prof);
-           System.out.println(prof.getNom());
-           System.out.println("-------------------------------------------");*/
-         }
+            essai.TrierParHeure(essai.getSeances());
+        }
         
+    }
+     
+     
+     public GererPromotionControleur(int Id, int semaine)
+    {
+        
+        DAO<Professeur> professeurDao = new ProfesseurDAO(connection.getInstance());
+        DAO<Utilisateur> UtilisateurDao = new UtilisateurDAO(connection.getInstance());
+        DAO<Cours> CoursDao = new CoursDAO(connection.getInstance());
+        DAO<typeCours> typeCoursDao = new typeCoursDAO(connection.getInstance());
+        DAO<Promotion> PromotionDao = new PromotionDAO(connection.getInstance());
+        DAO<Groupe> GroupeDao = new GroupeDAO(connection.getInstance());
+        DAO<Site> SiteDao = new SiteDAO(connection.getInstance());
+        DAO<Salle> SalleDao = new SalleDAO(connection.getInstance());
+        DAO<Seance> SeanceDao = new SeanceDAO(connection.getInstance());
+        DAO<SeanceGroupe> SeanceGroupeDao = new SeanceGroupeDAO(connection.getInstance());
+        DAO<SeanceSalle> SeanceSalleDao = new SeanceSalleDAO(connection.getInstance());
+        DAO<seanceEnseignant> SeanceEnseignantDao = new seanceEnseignantDAO(connection.getInstance());
+        
+
+        this.promotion = PromotionDao.find(Id);
+        System.out.print("Promo : ");
+        System.out.println(promotion.getNom());
+        ArrayList<Groupe> groupes = GroupeDao.findAll(promotion.getId());
+        for (Groupe j : groupes)
+        {
+            if(SeanceDao.find(SeanceGroupeDao.find(j.getId()).getIdSeance()).getSemaine() == semaine)
+            {
+                GererGroupeControleur essai = new GererGroupeControleur(j.getId(),semaine);
+            }
+         }
+    }
+
+    public Promotion getPromotion() {
+        return promotion;
+    }
+
+    public ArrayList<typeCours> getTypecours() {
+        return typecours;
+    }
+
+    public ArrayList<Groupe> getGroupe() {
+        return groupe;
+    }
+
+    public ArrayList<Utilisateur> getProfesseurs() {
+        return professeurs;
+    }
+
+    public ArrayList<Site> getSites() {
+        return sites;
+    }
+
+    public ArrayList<Salle> getSalles() {
+        return salles;
+    }
+
+    public ArrayList<Seance> getSeances() {
+        return seances;
+    }
+
+    public ArrayList<Cours> getCours() {
+        return cours;
     }
 }
